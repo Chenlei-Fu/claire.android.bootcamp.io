@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Android Bootcamp: The Industry-Ready Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Chosen Palette: "Elite Tech" - A sophisticated dark navy base (#0a2540), a vibrant gold accent (#daa520), a professional bright blue (#4285f4), and a clean, warm off-white background (#fdfdfa). -->
+    <!-- Application Structure Plan: A premium, single-page narrative. It starts with a Hero section, followed by an instructor intro. The structure then flows into the project itself, a new "Course Timeline" section, the tech stack, and outcomes. The user flow is a guided scroll to build a compelling case for the course. -->
+    <!-- Visualization & Content Choices: Source Info (Project PDF, Claire's elite background, App Screenshots) -> Goal (Create a highly attractive project showcase that highlights the instructor and the course structure) -> Presentation (Hero statement, instructor value props, image gallery, timeline/cards, tech stack tags) -> Interaction (Smooth scroll nav, links to external resources) -> Justification (Builds trust, provides a clear roadmap, visually engaging) -> Library/Method (HTML, Tailwind CSS, Vanilla JS). NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfdfa;
+            color: #1f2937;
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background-color: #0a2540;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .navbar {
+            background-color: rgba(253, 253, 250, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .nav-link {
+            color: #0a2540;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            border-bottom: 3px solid transparent;
+            transition: color 0.3s, border-color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #4285f4;
+            border-bottom-color: #4285f4;
+        }
+        .section-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: #0a2540;
+            text-align: center;
+            margin-bottom: 3.5rem;
+            letter-spacing: -0.03em;
+        }
+        .highlight-gold {
+            color: #daa520;
+        }
+        .highlight-blue {
+             color: #4285f4;
+        }
+        .card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03), 0 4px 6px -2px rgba(0,0,0,0.03);
+            border: 1px solid #e5e7eb;
+        }
+        .feature-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+        .tech-tag {
+            background-color: #e0e7ff;
+            color: #3730a3;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0.25rem;
+            border: 1px solid #c7d2fe;
+            transition: all 0.2s;
+        }
+        .tech-tag:hover {
+             background-color: #3730a3;
+             color: white;
+        }
+        .benefit-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        .benefit-list li::before {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #16a34a;
+            font-size: 1.25rem;
+        }
+        .phone-mockup {
+            background: #111827;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4);
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .phone-screen {
+            border-radius: 30px;
+            overflow: hidden;
+            background-color: #e5e7eb;
+        }
+        .phone-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .cta-button {
+            background-image: linear-gradient(to right, #4285f4, #3b82f6);
+            color: white;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(59, 130, 246, 0.4);
+        }
+        .company-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            filter: grayscale(100%) opacity(60%);
+            transition: filter 0.3s;
+        }
+        .company-logos:hover {
+            filter: grayscale(0%) opacity(100%);
+        }
+        /* Timeline specific styles */
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            padding-bottom: 2.5rem;
+        }
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0.5rem;
+            width: 2px;
+            height: 100%;
+            background-color: #d1d5db; /* Gray line */
+        }
+        .timeline-icon {
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            transform: translateX(-50%);
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            background-color: #fdfdfa;
+            border: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .timeline-icon .inner-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 9999px;
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="sticky top-0 z-50 navbar">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <span class="text-2xl font-bold text-[#0a2540]">Claire's Android Bootcamp</span>
+                <div class="hidden md:flex space-x-1 items-center" id="nav-links-desktop">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white pt-24 pb-32">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-7xl font-black leading-tight">
+                Build Android Apps to a <span class="highlight-gold">Top-Tier Standard</span>
+            </h1>
+            <p class="mt-6 text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto">
+                This isn't just a tutorial. It's an elite mentorship program led by an engineer who has received offers from the world's most competitive tech firms. Learn to build apps that meet the standards of companies like these:
+            </p>
+            <div class="company-logos text-4xl mt-8">
+                <i class="fab fa-google" title="Google"></i>
+                <i class="fab fa-meta" title="Meta"></i>
+                <i class="fab fa-stripe" title="Stripe"></i>
+                <i class="fab fa-microsoft" title="Microsoft"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 -mt-16">
+
+        <!-- Meet Your Instructor -->
+        <section id="instructor" class="mb-24">
+            <div class="card">
+                <div class="grid md:grid-cols-3 gap-12 items-center">
+                    <div class="md:col-span-1 text-center">
+                         <div class="w-48 h-48 rounded-full mx-auto bg-gradient-to-br from-blue-100 to-yellow-100 flex items-center justify-center ring-4 ring-white shadow-lg">
+                            <i class="fas fa-user-astronaut text-7xl text-[#0a2540]"></i>
+                         </div>
+                        <h3 class="text-3xl font-bold mt-6">Claire [Your Last Name]</h3>
+                        <p class="text-gray-500 font-medium">Your Industry Insider & Mentor</p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <h2 class="section-title !text-left !mb-6 !text-4xl">The <span class="highlight-blue">Claire Difference</span></h2>
+                        <p class="text-lg text-gray-700 mb-6">"I designed this course to be the mentorship I wish I had. After navigating the intense interview loops at multiple top-tier companies, I realized that success isn't just about knowing APIs—it's about demonstrating a deep understanding of software engineering principles. It's about thinking like an architect, writing code that's clean and testable, and justifying your technical decisions with confidence. This is the 'insider knowledge' that separates a good developer from a great one, and it's what I am here to teach you."</p>
+                        <ul class="benefit-list text-gray-700">
+                             <li>
+                                <strong>Proven Success:</strong> I have secured highly competitive offers from **Google, Meta, Stripe, Microsoft, and more**, validating a deep understanding of what elite companies look for in an engineer.
+                            </li>
+                            <li>
+                                <strong>Insider Knowledge:</strong> I teach the "why" behind the code—focusing on the architectural decisions, trade-offs, and best practices that are rigorously tested in top-tier interviews.
+                            </li>
+                             <li>
+                                <strong>Career Acceleration:</strong> This course is your career accelerator. The project we build is designed to be the centerpiece of your portfolio, equipping you with the skills and talking points to transform what you learn into tangible career opportunities.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Project Introduction & Previews -->
+        <section id="project-intro" class="mb-24">
+            <h2 class="section-title">The Capstone Project: <span class="highlight-blue">HabitTrack Pro</span></h2>
+            <p class="text-center text-gray-600 text-lg max-w-3xl mx-auto -mt-6 mb-12">
+                Our entire course revolves around building one application from scratch: a professional-grade, beautifully designed habit tracker. This project is meticulously crafted to teach you the most in-demand skills and give you a portfolio piece that stands out.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <!-- NOTE: Replace with the URL for 240980185...png (Home Screen) -->
+                        <img src="img/home.png" alt="Habit Tracker Home Screen" title="Main Dashboard"/>
+                    </div>
+                </div>
+                <div class="phone-mockup lg:scale-110 lg:z-10">
+                    <div class="phone-screen">
+                         <!-- NOTE: Replace with the URL for 240980217...png (New Habit Screen) -->
+                        <img src="img/create.png" alt="New Habit Creation Screen" title="Create a New Habit"/>
+                    </div>
+                </div>
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <!-- NOTE: Replace with the URL for 240980065...png (Login Screen) -->
+                        <img src="img/signup.png" alt="Habit Tracker Login Screen" title="Login & Welcome Screen"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- NEW SECTION: Course Timeline -->
+        <section id="timeline" class="mb-24">
+            <h2 class="section-title">Your 5-Week <span class="highlight-blue">Transformation Plan</span></h2>
+            <div class="card">
+                <div class="relative">
+                    <!-- Week 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><div class="inner-dot"></div></div>
+                        <h3 class="text-2xl font-bold text-[#0a2540] mb-2">Week 1: Foundations & Data Layer</h3>
+                        <p class="text-gray-600">We start with a professional setup: Android Studio, Git, and Gradle. Then, we build and test the complete database layer using Room (Entity, DAO, Type Converters) and write our first instrumented tests.</p>
+                    </div>
+                    <!-- Week 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><div class="inner-dot"></div></div>
+                        <h3 class="text-2xl font-bold text-[#0a2540] mb-2">Week 2: Architecture & Business Logic</h3>
+                        <p class="text-gray-600">Implement the Repository pattern following Clean Architecture principles. Master Dependency Injection with Hilt, then build and unit test the ViewModel, learning modern state management with StateFlow.</p>
+                    </div>
+                    <!-- Week 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><div class="inner-dot"></div></div>
+                        <h3 class="text-2xl font-bold text-[#0a2540] mb-2">Week 3: UI with Jetpack Compose</h3>
+                        <p class="text-gray-600">A deep dive into Jetpack Compose. We'll build reusable UI components and create a beautiful, dynamic Home screen using `LazyColumn` and `Scaffold`, connecting the UI to the ViewModel to display real data.</p>
+                    </div>
+                    <!-- Week 4 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><div class="inner-dot"></div></div>
+                        <h3 class="text-2xl font-bold text-[#0a2540] mb-2">Week 4: Interaction & Navigation</h3>
+                        <p class="text-gray-600">Bring the app to life by handling UI events and gestures. We'll implement multi-screen navigation with Compose Navigation and build the "Add/Edit Habit" screen, passing data and creating new habits.</p>
+                    </div>
+                    <!-- Week 5 -->
+                    <div class="timeline-item">
+                         <div class="timeline-icon"><div class="inner-dot"></div></div>
+                        <h3 class="text-2xl font-bold text-[#0a2540] mb-2">Week 5: Advanced Topics & Career Prep</h3>
+                        <p class="text-gray-600">Implement Firebase Authentication, add UI polish, and conduct UI testing with Espresso. Finally, we'll prepare a release-ready App Bundle and learn how to showcase your project on your resume and GitHub.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section id="tech-stack" class="mb-24">
+            <h2 class="section-title">The <span class="highlight-blue">Technology</span> You Will Master</h2>
+            <div class="card text-center">
+                <p class="text-lg text-gray-600 mb-6">This is the definitive toolkit for a modern Android professional:</p>
+                <div class="flex flex-wrap justify-center items-center gap-3">
+                    <span class="tech-tag">Kotlin & Coroutines</span>
+                    <span class="tech-tag">Jetpack Compose</span>
+                    <span class="tech-tag">MVVM Architecture</span>
+                    <span class="tech-tag">Room Database</span>
+                    <span class="tech-tag">Hilt (Dependency Injection)</span>
+                    <span class="tech-tag">Firebase Authentication</span>
+                    <span class="tech-tag">Compose Navigation</span>
+                    <span class="tech-tag">Unit & UI Testing</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Learning Outcomes -->
+        <section id="outcomes" class="mb-24">
+             <h2 class="section-title">Your Transformation</h2>
+             <div class="card">
+                <ul class="benefit-list text-gray-700">
+                    <li>
+                        <strong>Build a Portfolio-Ready Application:</strong> You will finish with a complete, fully-functional app on your GitHub that you can confidently showcase to any recruiter.
+                    </li>
+                    <li>
+                        <strong>Master Professional Workflow:</strong> Learn to think like a senior engineer—participate in feature planning, write clean code, implement robust business logic, and perform rigorous testing.
+                    </li>
+                     <li>
+                        <strong>Deeply Understand Modern Android:</strong> Gain a working knowledge of the entire modern Android ecosystem, from UI with Jetpack Compose to local storage with Room.
+                    </li>
+                     <li>
+                        <strong>Gain Interview Confidence:</strong> This project will serve as the perfect talking point in interviews, allowing you to demonstrate practical skills and a deep understanding of core engineering principles.
+                    </li>
+                </ul>
+             </div>
+        </section>
+
+         <!-- Call to Action -->
+        <section id="cta" class="text-center py-16">
+            <h2 class="section-title !text-5xl">Ready to Build Like a Top-Tier Engineer?</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-10">Stop passively watching tutorials. It's time to actively build a project that will accelerate your career. Let's start this journey together.</p>
+            <a href="mailto:your-email@example.com?subject=Inquiry: Claire's Android Bootcamp" class="cta-button text-xl">
+                Inquire About Mentorship
+            </a>
+        </section>
+
+    </div>
+
+    <footer class="hero-bg text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-lg font-bold">Claire's Elite Android Bootcamp</p>
+            <p class="text-sm text-gray-400 mt-2">&copy; 2025 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const navLinks = [
+            { id: 'instructor', title: 'Instructor' },
+            { id: 'project-intro', title: 'The Project' },
+            { id: 'timeline', title: 'Timeline' },
+            { id: 'tech-stack', title: 'Tech Stack' },
+            { id: 'outcomes', title: 'Outcomes' },
+            { id: 'cta', title: 'Get Started' }
+        ];
+
+        const desktopNav = document.getElementById('nav-links-desktop');
+        navLinks.forEach(link => {
+            const a = document.createElement('a');
+            a.href = `#${link.id}`;
+            a.textContent = link.title;
+            a.className = 'nav-link';
+            desktopNav.appendChild(a);
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Active link highlighting on scroll
+        const sections = navLinks.map(link => document.getElementById(link.id));
+        const navItems = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (section) {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                }
+            });
+
+            navItems.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === `#${current}`) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
